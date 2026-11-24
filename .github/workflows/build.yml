@@ -1,4 +1,4 @@
- name: Build APK
+name: Build APK
 on:
   workflow_dispatch:
   push:
@@ -18,7 +18,7 @@ jobs:
             unzip -o LineOverlay*.zip
           fi
           f=$(find . -name settings.gradle -not -path './.git/*' | head -1)
-          if [ -z "$f" ]; then echo "::error::settings.gradle not found. Upload the project files or the zip to the repo root."; exit 1; fi
+          if [ -z "$f" ]; then echo "::error::settings.gradle not found"; exit 1; fi
           echo "dir=$(dirname "$f")" >> "$GITHUB_OUTPUT"
       - uses: actions/setup-java@v4
         with:
@@ -34,4 +34,3 @@ jobs:
         with:
           name: line-overlay-apk
           path: ${{ steps.loc.outputs.dir }}/app/build/outputs/apk/debug/app-debug.apk
-          
